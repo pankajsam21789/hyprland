@@ -1,0 +1,94 @@
+# findutils  inetutils  iputils nfs-utils pciutils usbutils alsa-utils bluez-utils bridge-utils cifs-utils dateutils desktop-file-utils ecryptfs-utils  exfat-utils progress python-utils renameutils
+
+#genfstab for /etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
+
+# pacstrap /mnt
+pacstrap -K /mnt linux linux-firmware base base-devel git neovim intel-ucode iwd findutils iputils inetutils lvm2 btrfs-progs
+
+# Check interface
+ls /sys/class/net
+
+#Change hostname
+echo sameer > /etc/hostname
+
+#Add hostname in /etc/hosts
+echo '127.0.1.1        sameer' >> /etc/hosts
+
+# iwlwifi configuration kernel module for device not found after resume
+echo 'options iwlmvm power_scheme=1' > /etc/modprobe.d/iwlmvm.conf
+
+#Accessing documents and text editor
+pacman -S  man-db man-pages texinfo neovim
+
+# chroot to /mnt
+alias ac='arch-chroot /mnt'
+
+#Timezone setup and clock sync
+ac ln -sf /usr/share/zoneinfo/Asia/Kolkata /etc/localtime
+ac hwclock --systohc
+
+# Locale generation
+ac sed -i '/en_IN/s/^#//' /etc/locale.gen
+ac locale-gen
+echo 'LANG=en_IN.UTF-8' > /mnt/etc/locale.conf
+echo 'FONT=latarcyrheb-sun32' > /mnt/etc/vconsole.conf
+
+#enabling networking services
+ac systemctl enable systemd-networkd systemd-resolved iwd
+echo -e ' [Match]
+Name=wlan0
+
+[Network]
+DHCP=yes
+IgnoreCarrierLoss=3s' > /mnt/etc/systemd/network/25-wireless.network
+
+
+#Update mkinitcpio.conf and linux.preset to generate Unified kernel
+sed -i '/^HOOKS/s/block/resume block sd-encrypt lvm2/' /mnt/etc/mkinitcpio.conf
+grep '^HOOK' /mnt/etc/mkinitcpio.conf
+sed -i -e '/default_uki/s/^.*/default_uki="\/boot\/EFI\/Linux\/arch-linux.efi"/' -e '/default_options/s/^#//' /mnt/etc/mkinitcpio.d/linux.preset
+ac mkinitcpio -P
+bootctl install --esp-path=/mnt/boot
+
+#Updating user configuration
+ac passwd
+ac useradd -mG wheel sameer -d /home/arch
+ac passwd sameer
+
+#Installing yay aur helper
+ac git clone https://aur.archlinux.org/yay-bin.git /home/arch/yay
+#makepkg -si
+
+#cat /mnt/boot/loader/entries/arch.conf
+#title   Arch Linux
+#linux   /vmlinuz-linux
+#initrd  /initramfs-linux.img
+#options rw quiet splash rd.luks.name=1742d97e-fda8-44e6-9079-557f27ff40b5=cryptlvm root=/dev/sameer_vg/arch resume=/dev/sameer_vg/swap rootflags=subvol=@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
