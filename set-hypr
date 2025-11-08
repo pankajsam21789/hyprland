@@ -103,7 +103,7 @@ if [[ $STAR == "Y" || $STAR == "y" ]]; then
     cp starship.toml ~/.config/
 fi
 
-
+yay -S ulaa-browser zoho-notebook zoho-mail-desktop arattai-deb-bin
 
 ### Script is done ###
 echo -e "Script had completed.\n"
