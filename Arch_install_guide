@@ -55,6 +55,7 @@ bootctl install --esp-path=/mnt/boot
 ac passwd
 ac useradd -mG wheel sameer -d /home/arch
 ac passwd sameer
+pacman -S alsa-tools
 
 #Installing yay aur helper
 ac git clone https://aur.archlinux.org/yay-bin.git /home/arch/yay
