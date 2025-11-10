@@ -1,5 +1,6 @@
 # findutils  inetutils  iputils nfs-utils pciutils usbutils alsa-utils bluez-utils bridge-utils cifs-utils dateutils desktop-file-utils ecryptfs-utils  exfat-utils progress python-utils renameutils
 
+
 #genfstab for /etc/fstab
 genfstab -U /mnt >> /mnt/etc/fstab
 
@@ -19,7 +20,7 @@ echo '127.0.1.1        sameer' >> /etc/hosts
 echo 'options iwlmvm power_scheme=1' > /etc/modprobe.d/iwlmvm.conf
 
 #Accessing documents and text editor
-pacman -S  man-db man-pages texinfo neovim cronie acpi fastfetch dhclient findutils  inetutils  iputils nfs-utils pciutils usbutils alsa-utils bluez-utils bridge-utils cifs-utils dateutils desktop-file-utils ecryptfs-utils  exfat-utils progress python-utils renameutils
+pacman -S  man-db man-pages texinfo neovim cronie acpi fastfetch dhclient findutils  inetutils  iputils nfs-utils pciutils usbutils alsa-utils bluez-utils bridge-utils cifs-utils dateutils desktop-file-utils ecryptfs-utils  exfat-utils progress python-utils renameutils net-tools hyprpaper kdeconnect kmix pavucontrol 
 
 
 # chroot to /mnt
