@@ -21,7 +21,7 @@ echo 'options iwlmvm power_scheme=1' > /etc/modprobe.d/iwlmvm.conf
 
 #Accessing documents and text editor
 ac pacman -S  man-db man-pages texinfo neovim cronie acpi fastfetch dhclient findutils  inetutils  iputils nfs-utils pciutils usbutils alsa-utils bluez-utils bridge-utils cifs-utils dateutils desktop-file-utils ecryptfs-utils  exfat-utils progress python-utils renameutils net-tools hyprpaper kdeconnect kmix pavucontrol wget
-ac pacman -S pipewire pipewire-pulse wireplumber alsa-utils
+ac pacman -S pipewire pipewire-pulse wireplumber alsa-utils pipewire-alsa pipewire-v4l2
 
 
 # chroot to /mnt
