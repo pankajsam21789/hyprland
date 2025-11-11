@@ -28,6 +28,7 @@ ac sudo pacman -S libcamera libcamera-tools
 
 
 
+
 # chroot to /mnt
 alias ac='arch-chroot /mnt'
 
