@@ -26,7 +26,7 @@ alias gcheck="git checkout"
 alias gcredential="git config credential.helper store"
 alias pacmans='sudo pacman -S --noconfirm'
 alias pacmanss='pacman -Ss'
-alias systemctl='sudo systemctl'
+#alias systemctl='sudo systemctl'
 alias mount='sudo mount'
 changewallpaper () {
 	cdir="$(pwd)"
