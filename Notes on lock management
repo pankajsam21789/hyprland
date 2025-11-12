@@ -1,0 +1,57 @@
+Safe alternatives to typing the password every time
+1) Enable fingerprint authentication (PAM)
+
+Let PAM accept a fingerprint so Sway / swaylock will authenticate via the fingerprint reader.
+
+Debian / Ubuntu (example)
+sudo apt update
+sudo apt install fprintd libpam-fprintd
+# enroll fingerprint (run as your user)
+fprintd-enroll
+
+
+Edit PAM for sway (or systemwide). If your system uses /etc/pam.d/sway create it or edit /etc/pam.d/common-auth and add near the top:
+
+auth    sufficient    pam_fprintd.so
+
+
+Reload your session or log out/in. swaylock uses PAM, so enrolled fingerprints will unlock it.
+
+Arch Linux (example)
+sudo pacman -S fprintd libfprint
+# enroll:
+fprintd-enroll
+
+
+Same PAM change as above.
+
+Pros: convenient, relatively fast.
+Cons: biometric authentication has different security properties (cannot be "changed"); ensure you understand local risks.
+
+2) Use a hardware token (YubiKey / FIDO2) with PAM (strong + convenient)
+
+Use a YubiKey / FIDO2 token to unlock via pam_u2f or pam_fido2.
+
+Typical steps (packages vary by distro)
+
+Install pam-u2f or libpam-fido2 / pamu2fcfg packages.
+
+Register your key for your user (example for pamu2fcfg / pam-u2f):
+
+# create mapping for the user (run as your user)
+pamu2fcfg > ~/.config/Yubico/u2f_keys
+# or follow pam-u2f setup to put keys into /etc/u2f_keys or similar
+
+
+Add to PAM (e.g. /etc/pam.d/sway):
+
+auth    sufficient    pam_u2f.so
+
+
+or for libpam-fido2:
+
+auth    sufficient    pam_fido2.so
+
+
+Pros: strong, fast, phishing-resistant.
+Cons: requires hardware token and careful setup; lose token = need recovery plan.
